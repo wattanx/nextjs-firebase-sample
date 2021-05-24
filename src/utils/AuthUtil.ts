@@ -5,13 +5,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 export function login(): Promise<void> {
     return new Promise((resolve, reject) => {
-        firebase
-            .auth()
-            .signInWithRedirect(provider)
-            .then(() => {
-                resolve();
-            })
-            .catch(error => reject(error));
+        firebase.auth().signInWithRedirect(provider)
     });
 }
 
