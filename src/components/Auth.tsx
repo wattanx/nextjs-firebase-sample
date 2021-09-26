@@ -1,26 +1,30 @@
-import firebase from '../utils/firebase';
-import { FC, createContext, useEffect, useState } from 'react';
+import { User } from "framework";
+import { onAuthStateChanged } from "@auth";
+
+import { FC, createContext, useEffect, useState } from "react";
 
 type AuthContextProps = {
-  currentUser: firebase.User | null | undefined;
-}
-  
+  currentUser: User | null | undefined;
+};
+
 const AuthContext = createContext<AuthContextProps>({ currentUser: undefined });
 
 const AuthProvider: FC = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState<firebase.User | null | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<User | null | undefined>(
+    undefined
+  );
 
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
-          // ログイン状態が変化すると呼ばれる
-          setCurrentUser(user);
-        })
-      }, []);
-    return (
-        <AuthContext.Provider value={{ currentUser: currentUser }}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
+  useEffect(() => {
+    onAuthStateChanged((user) => {
+      // ログイン状態が変化すると呼ばれる
+      setCurrentUser(user);
+    });
+  }, []);
+  return (
+    <AuthContext.Provider value={{ currentUser: currentUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-export { AuthContext, AuthProvider }
+export { AuthContext, AuthProvider };
