@@ -1,5 +1,4 @@
-import { FC, createContext, useEffect, useState } from "react";
-import { useContext } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import { User } from "framework";
 import { onAuthStateChanged } from "@auth";
 
@@ -9,7 +8,7 @@ type AuthContextProps = {
 
 const AuthContext = createContext<AuthContextProps>({ currentUser: undefined });
 
-export const AuthProvider: FC = ({ children }) => {
+export const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null | undefined>(
     undefined
   );
